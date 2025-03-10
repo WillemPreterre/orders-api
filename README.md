@@ -17,7 +17,7 @@ Exécuter les tests avec Jest :
 | **DELETE** | `/api/orders/:id` | Supprime une commande |
 
 ## :tools: Technologies utilisées
-- **Nest.js** (API Backend)
+- **Node.js** (API Backend)
 - **MongoDB** (Base de données)
 - **RabbitMQ** (Message Broker)
 - **Prometheus / Grafana** (Monitoring)
@@ -52,16 +52,16 @@ npm test  # ou yarn test
 | **DELETE** | `/api/orders/:id` | Supprime une commande |
 
 ## :tools: Technologies utilisées
-- **Nest.js** (API Backend)
+- **Node.js** (API Backend)
 - **MongoDB** (Base de données)
 - **RabbitMQ** (Message Broker)
 - **Prometheus / Grafana** (Monitoring)
 - **Jest** (Tests unitaires et d’intégration)
 - **Docker** (Conteneurisation)
-# API Products - Documentation
+# API Orders - Documentation
 
 ## :pushpin: Description
-API Orders est une application Nest.js avec MongoDB et RabbitMQ, conçue pour gérer des commandes, avec une implémentation des tests Jest et un monitoring via Prometheus et Grafana.
+API Orders est une application Node.js avec MongoDB et RabbitMQ, conçue pour gérer des commandes, avec une implémentation des tests Jest et un monitoring via Prometheus et Grafana.
 
 ## :rocket: Installation & Démarrage
 
@@ -116,7 +116,7 @@ Exécuter les tests avec Jest :
 | **DELETE** | `/api/orders/:id` | Supprime une commande |
 
 ## :tools: Technologies utilisées
-- **Nest.js** (API Backend)
+- **Node.js** (API Backend)
 - **MongoDB** (Base de données)
 - **RabbitMQ** (Message Broker)
 - **Prometheus / Grafana** (Monitoring)
