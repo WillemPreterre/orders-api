@@ -5,7 +5,12 @@ let channel: Channel;
 export const rabbitMQConnection = async (): Promise<void> => {
   try {
     const connection = await amqp.connect(process.env.RABBITMQ_URI as string);
-    channel = await connection.createChannel();
+    if(connection) {
+      channel = await connection.createChannel();
+
+    }
+
+    
     console.log("Connecté à RabbitMQ");
   } catch (err) {
     console.error("Erreur de connexion à RabbitMQ :", err);
