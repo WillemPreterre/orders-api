@@ -13,7 +13,7 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
-    "@types/amqplib": "^0.10.7",
+    "amqp-ts": "^1.8.0",
     "amqplib": "^0.10.5",
     "body-parser": "^1.20.3",
     "cors": "^2.8.5",
@@ -27,6 +27,8 @@
     "winston-daily-rotate-file": "^5.0.0"
   },
   "devDependencies": {
+    "@types/amqplib": "^0.10.7",
+    "@types/bluebird": "^3.5.42",
     "@types/cors": "^2.8.17",
     "@types/express": "^5.0.0",
     "@types/jest": "^29.5.14",

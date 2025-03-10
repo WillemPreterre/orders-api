@@ -1,6 +1,6 @@
-import amqp from 'amqplib';
+import amqp, { Channel } from 'amqplib';
 
-let channel: amqp.Channel | null = null;
+let channel: Channel;
 
 export const rabbitMQConnection = async (): Promise<void> => {
   try {
