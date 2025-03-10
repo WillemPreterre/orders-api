@@ -41,7 +41,7 @@ jobs:
 
       - name: Run tests
         continue-on-error: true
-        run: npm test --bail=0 --forceExit
+        run: npm test --bail=0
 
       - name: Build Docker image
         run: docker build -t api-orders .
