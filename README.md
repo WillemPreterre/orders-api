@@ -82,6 +82,7 @@ DB_USERNAME=
 DB_PASSWORD=
 RABBITMQ_URL=
 SECRET_KEY=
+MONGO_URI=
 ```
 
 ### **:four: Installer les dépendances**
