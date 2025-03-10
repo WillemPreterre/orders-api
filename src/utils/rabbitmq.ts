@@ -1,22 +1,22 @@
-import amqp, { Channel } from 'amqplib';
+import amqplib, {  Connection,Channel } from 'amqplib';
 
 let channel: Channel;
 
-export const rabbitMQConnection = async (): Promise<void> => {
+export const rabbitMQConnection = async () => {
   try {
-    const connection = await amqp.connect(process.env.RABBITMQ_URI as string);
-    channel = await connection.createChannel();
-    console.log("Connecté à RabbitMQ");
-  } catch (err) {
-    console.error("Erreur de connexion à RabbitMQ :", err);
+      const connection = await amqplib.connect(process.env.RABBITMQ_URL as string);
+      channel = await connection.createChannel();
+      console.log("Connecté à RabbitMQ");
+  } catch (error:any) {
+      console.error("Erreur de connexion à RabbitMQ:", error.message);
+      throw new Error("RabbitMQ Down");
   }
 };
-
-export const getChannel = (): amqp.Channel | null => {
+export const getChannel = (): amqplib.Channel | null => {
   return channel;
 };
 export const closeRabbitMQConnection = async (): Promise<void> => {
-  const connection = await amqp.connect(process.env.RABBITMQ_URI as string);
+  const connection = await amqplib.connect(process.env.RABBITMQ_URL as string);
 
   if (connection) {
     await connection.close();
