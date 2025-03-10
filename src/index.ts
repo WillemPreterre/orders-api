@@ -24,7 +24,6 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
 // Connexion à RabbitMQ
 rabbitMQConnection()
 
-
 // Connexion à MongoDB
 export const connectDatabaseOrders = async (): Promise<void> => {
   try {

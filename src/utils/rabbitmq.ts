@@ -3,13 +3,16 @@ import amqplib, {  Connection,Channel } from 'amqplib';
 let channel: Channel;
 
 export const rabbitMQConnection = async () => {
+  if (process.env.NODE_ENV === 'test') {
+    console.log("Mock RabbitMQ en mode test");
+    return;
+  }
   try {
-      const connection = await amqplib.connect(process.env.RABBITMQ_URL as string);
-      channel = await connection.createChannel();
-      console.log("Connecté à RabbitMQ");
-  } catch (error:any) {
-      console.error("Erreur de connexion à RabbitMQ:", error.message);
-      throw new Error("RabbitMQ Down");
+    const connection = await amqplib.connect(process.env.RABBITMQ_URL as string);
+    channel = await connection.createChannel();
+    console.log("Connecté à RabbitMQ");
+  } catch (error: any) {
+    console.error("Erreur de connexion à RabbitMQ", error);
   }
 };
 export const getChannel = (): amqplib.Channel | null => {

@@ -40,8 +40,7 @@ jobs:
         run: npm install
 
       - name: Run tests
-        continue-on-error: true
-        run: npm test --bail=0
+        run: npm test
 
       - name: Build Docker image
         run: docker build -t api-orders .

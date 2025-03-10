@@ -20,7 +20,6 @@ beforeAll(async () => {
     );
     console.log('testToken', testToken);
 });
-
 afterAll(async () => {
     await mongoose.disconnect();
     await mongoServer.stop();
