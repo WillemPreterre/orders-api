@@ -36,6 +36,23 @@ services:
     networks:
       - app_network
 
+  prometheus:
+    image: prom/prometheus
+    container_name: prometheus-orders
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+    ports:
+      - "9099:9099"
+    networks:
+      - app_network
+
+  grafana:
+    image: grafana/grafana
+    container_name: grafana-orders
+    ports:
+      - "3002:3002"
+    networks:
+      - app_network
 networks:
   app_network:
     driver: bridge
