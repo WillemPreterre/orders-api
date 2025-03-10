@@ -1,4 +1,4 @@
-import { rabbitMQConnection, publishToQueue } from "../utils/rabbitmq";
+import { rabbitMQConnection, publishToQueue,closeRabbitMQConnection } from "../utils/rabbitmq";
 import amqplib from "amqplib";
 
 jest.mock("amqplib");
@@ -26,7 +26,9 @@ describe("RabbitMQ Utils", () => {
         (amqplib.connect as jest.Mock).mockResolvedValue(mockConnection);
         await rabbitMQConnection();
     });
-
+    afterAll(async () => {
+        await closeRabbitMQConnection();
+      });
     test('rabbitMQConnection doit gérer une erreur de connexion', async () => {
         (amqplib.connect as jest.Mock).mockRejectedValue(new Error('Échec de connexion à RabbitMQ'));
     
