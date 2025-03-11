@@ -38,7 +38,9 @@ jobs:
 
       - name: Install dependencies
         run: npm install
-
+      - name: Debug Environment Variables
+        run: env | grep JWT_SECRET
+        
       - name: Run tests
         run: npm test 
 
