@@ -5,6 +5,17 @@ import { publishToQueue } from '../../utils/rabbitmq';
 jest.mock('../../models/ordersModel');
 jest.mock('../../utils/rabbitmq');
 
+jest.mock('amqplib', () => ({
+    connect: jest.fn().mockResolvedValue({
+      createChannel: jest.fn().mockResolvedValue({
+        assertQueue: jest.fn(),
+        sendToQueue: jest.fn(),
+        consume: jest.fn(),
+      }),
+      close: jest.fn().mockResolvedValue(undefined),
+    }),
+  }));
+  
 describe('Orders Controller', () => {
     it('should get all orders', async () => {
         const req = {} as any;
