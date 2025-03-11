@@ -2,6 +2,7 @@ import authMiddleware from "../middlewares/authMiddleware";
 import { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
 
+// ✅ Mock de `jsonwebtoken`
 jest.mock("jsonwebtoken");
 
 describe("Auth Middleware", () => {
@@ -11,24 +12,41 @@ describe("Auth Middleware", () => {
     let validToken: string;
     let invalidToken: string;
 
+    beforeAll(() => {
+        // ✅ Définit une valeur par défaut si JWT_SECRET est absent
+        process.env.JWT_SECRET = process.env.JWT_SECRET || "test_secret";
+    });
+
     beforeEach(() => {
         req = {
             headers: {}
         } as Partial<Request>;
+
         res = {
             status: jest.fn().mockReturnThis(),
             json: jest.fn(),
         } as Partial<Response>;
+
         next = jest.fn();
 
-        // Générer un token valide pour les tests
-        validToken = jwt.sign(
-            { userId: "67ab1abe5905025733f3661f", role: "api_client" },
-            process.env.JWT_SECRET as string,
-            { expiresIn: "1h" }
-        );
+        validToken = "mocked_valid_token";
+        invalidToken = "mocked_invalid_token";
 
-        invalidToken = "invalid_token";
+        // ✅ Mock de `jwt.sign`
+        (jwt.sign as jest.Mock).mockReturnValue(validToken);
+
+        // ✅ Mock de `jwt.verify`
+        (jwt.verify as jest.Mock).mockImplementation((token) => {
+            if (token === validToken) {
+                return { userId: "67ab1abe5905025733f3661f", role: "api_client" };
+            } else {
+                throw new Error("Invalid token");
+            }
+        });
+    });
+
+    afterEach(() => {
+        jest.clearAllMocks();
     });
 
     it("Devrait refuser une requête avec un token manquant", () => {
@@ -42,9 +60,6 @@ describe("Auth Middleware", () => {
 
     it("Devrait refuser une requête avec un token invalide", () => {
         req.headers = { authorization: `Bearer ${invalidToken}` };
-        (jwt.verify as jest.Mock).mockImplementation(() => {
-            throw new Error("Invalid token");
-        });
 
         authMiddleware(req as Request, res as Response, next as NextFunction);
 
@@ -55,7 +70,6 @@ describe("Auth Middleware", () => {
 
     it("Devrait autoriser la requête avec un token valide", () => {
         req.headers = { authorization: `Bearer ${validToken}` };
-        (jwt.verify as jest.Mock).mockReturnValue({ userId: "67ab1abe5905025733f3661f", role: "api_client" });
 
         authMiddleware(req as Request, res as Response, next as NextFunction);
 
@@ -66,6 +80,8 @@ describe("Auth Middleware", () => {
 
     it("Devrait refuser une requête si le token est expiré", () => {
         req.headers = { authorization: `Bearer ${validToken}` };
+
+        // ✅ Simule une erreur de token expiré
         (jwt.verify as jest.Mock).mockImplementation(() => {
             throw new Error("jwt expired");
         });
@@ -79,6 +95,7 @@ describe("Auth Middleware", () => {
 
     it("Devrait refuser une requête si le token a un format incorrect", () => {
         req.headers = { authorization: "InvalidFormat" };
+
         authMiddleware(req as Request, res as Response, next as NextFunction);
 
         expect(res.status).toHaveBeenCalledWith(401);
