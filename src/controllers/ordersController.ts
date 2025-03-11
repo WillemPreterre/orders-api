@@ -30,7 +30,6 @@ export const createOrder = async (req: Request, res: Response): Promise<void> =>
     console.log('savedOrder',savedOrder)
     logger.info("Commande créée");
 
-    // Publier un message à RabbitMQ
     try {
         await publishToQueue("orders_created", JSON.stringify(savedOrder));
         console.log('passage de la publication du message à RabbitMQ :');

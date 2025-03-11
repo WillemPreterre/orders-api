@@ -60,7 +60,7 @@ describe('RabbitMQ Connection', () => {
 
   it('should close the RabbitMQ connection successfully', async () => {
     console.log = jest.fn();
-    await rabbitMQConnection(); // Assurez-vous que la connexion est initialisée
+    await rabbitMQConnection(); 
     await closeRabbitMQConnection();
     expect(console.log).toHaveBeenCalledWith("Connexion RabbitMQ fermée.");
   });
